@@ -5,12 +5,12 @@
 # e.g. sunshowers-test-binary-release-0.1.0.
 # Outputs an archive under the output parameter "archive-name"
 
-set -e -o pipefail
+set -e -x -o pipefail
 
 BINARY_NAME="$1"
 TAG_NAME="$2"
 
-VERSION=${TAG_NAME#"$BINARY_NAME"}
+VERSION=${TAG_NAME#"$BINARY_NAME-"}
 
 # Parameters to use
 CROSSBUILD_MACOS_SDK="macosx12.1"

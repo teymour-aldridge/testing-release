@@ -17,7 +17,7 @@ jobs:
       - uses: taiki-e/create-gh-release-action@v1
         with:
           prefix: sunshowers-test-binary-release
-          title: $version
+          title: $prefix $version
           branch: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
