@@ -22,7 +22,7 @@ xcrun --show-sdk-platform-version
 # Parameters to use
 CROSSBUILD_MACOS_SDK="macosx12.1"
 
-export CARGO_PROFILE_RELEASE_LTO=1
+export CARGO_PROFILE_RELEASE_LTO=true
 
 targets="aarch64-apple-darwin x86_64-apple-darwin"
 for target in $targets; do
