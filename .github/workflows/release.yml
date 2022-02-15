@@ -1,0 +1,78 @@
+# adapted from https://github.com/taiki-e/cargo-hack/blob/main/.github/workflows/release.yml
+
+name: Release binaries
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  create-release:
+    if: github.repository_owner == 'sunshowers'
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - uses: taiki-e/create-gh-release-action@v1
+        with:
+          title: $version
+          branch: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  upload-assets:
+    name: Publish for ${{ matrix.target }}
+    if: github.repository_owner == 'sunshowers'
+    needs:
+      - create-release
+    strategy:
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-18.04
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+      - uses: taiki-e/upload-rust-binary-action@v1
+        with:
+          bin: cargo-search2
+          # The tag name contains the binary name so just use that.
+          archive: $tag-target
+          target: ${{ matrix.target }}
+          tar: all
+          zip: windows
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CARGO_PROFILE_RELEASE_LTO: true
+
+  upload-assets-mac:
+    name: Publish universal binary for Mac
+    if: github.repository_owner == 'sunshowers'
+    needs:
+      - create-release
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+      - name: Build release for Mac
+        run: |
+          ./scripts/release-mac-build.sh sunshowers-test-binary-release "${{ github.ref_name }}"
+      - uses: svenstaro/upload-release-action@2.2.1
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: "sunshowers-test-binary-release-apple-darwin.tar.gz"
+          tag: ${{ github.ref }}
