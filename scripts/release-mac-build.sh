@@ -34,6 +34,7 @@ lipo -create \
 
 ARCHIVE_NAME="$BINARY_NAME-$VERSION-universal-apple-darwin.tar.gz"
 # Use gtar on Mac because Mac's tar is broken: https://github.com/actions/cache/issues/403
-gtar acf "$ARCHIVE_NAME" "target/$BINARY_NAME"
+pushd target
+gtar acf "../$ARCHIVE_NAME" "$BINARY_NAME"
 
 echo "::set-output name=archive-name::$ARCHIVE_NAME"
