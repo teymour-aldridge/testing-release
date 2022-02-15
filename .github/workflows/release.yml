@@ -45,7 +45,7 @@ jobs:
           override: true
       - uses: taiki-e/upload-rust-binary-action@v1
         with:
-          bin: cargo-search2
+          bin: sunshowers-test-binary-release
           # The tag name contains the binary name so just use that.
           archive: $tag-target
           target: ${{ matrix.target }}
