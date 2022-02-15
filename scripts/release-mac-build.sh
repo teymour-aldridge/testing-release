@@ -12,13 +12,6 @@ TAG_NAME="$2"
 
 VERSION=${TAG_NAME#"$BINARY_NAME"}
 
-echo "SDK version: "
-xcrun --show-sdk-version
-echo "SDK path: "
-xcrun --show-sdk-path
-echo "Platform version: "
-xcrun --show-sdk-platform-version
-
 # Parameters to use
 CROSSBUILD_MACOS_SDK="macosx12.1"
 
@@ -28,8 +21,8 @@ targets="aarch64-apple-darwin x86_64-apple-darwin"
 for target in $targets; do
   rustup target add $target
   # From: https://stackoverflow.com/a/66875783/473672
-  SDKROOT=$(xcrun -sdk $CROSSBUILD_MACOS_SDK --show-sdk-path) \
-  MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk $CROSSBUILD_MACOS_SDK --show-sdk-platform-version) \
+  SDKROOT=$(xcrun --show-sdk-path) \
+  MACOSX_DEPLOYMENT_TARGET=$(xcrun --show-sdk-platform-version) \
     cargo build --release "--target=$target"
 done
 
