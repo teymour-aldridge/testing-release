@@ -3,7 +3,7 @@
 # Build a universal release for publishing on Mac. Only works on Macs.
 # Assumes that TAG_NAME is in the forma "$BINARY_NAME-version",
 # e.g. sunshowers-test-binary-release-0.1.0.
-# Outputs a file by the name "$BINARY_NAME-apple-darwin.tar.gz"
+# Outputs an archive under the output parameter "archive-name"
 
 set -e -o pipefail
 
@@ -11,6 +11,9 @@ BINARY_NAME="$1"
 TAG_NAME="$2"
 
 VERSION=${TAG_NAME#"$BINARY_NAME"}
+
+# Parameters to use
+CROSSBUILD_MACOS_SDK="macosx12.0"
 
 export CARGO_PROFILE_RELEASE_LTO=1
 
@@ -29,5 +32,8 @@ lipo -create \
   "target/aarch64-apple-darwin/release/$BINARY_NAME" \
   "target/x86_64-apple-darwin/release/$BINARY_NAME"
 
+ARCHIVE_NAME="$BINARY_NAME-$VERSION-universal-apple-darwin.tar.gz"
 # Use gtar on Mac because Mac's tar is broken: https://github.com/actions/cache/issues/403
-gtar acf "$BINARY_NAME-apple-darwin.tar.gz" "target/$BINARY_NAME"
+gtar acf "$ARCHIVE_NAME" "target/$BINARY_NAME"
+
+echo "::set-output name=archive-name::$ARCHIVE_NAME"

@@ -70,10 +70,11 @@ jobs:
           profile: minimal
           override: true
       - name: Build release for Mac
+        id: build-release
         run: |
           ./scripts/release-mac-build.sh sunshowers-test-binary-release "${{ github.ref_name }}"
       - uses: svenstaro/upload-release-action@2.2.1
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "sunshowers-test-binary-release-apple-darwin.tar.gz"
+          file: ${{ steps.build-release.outputs.archive-name }}
           tag: ${{ github.ref }}
