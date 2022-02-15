@@ -47,7 +47,7 @@ jobs:
         with:
           bin: sunshowers-test-binary-release
           # The tag name contains the binary name so just use that.
-          archive: $tag-target
+          archive: $tag-$target
           target: ${{ matrix.target }}
           tar: all
           zip: windows

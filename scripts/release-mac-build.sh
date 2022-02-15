@@ -12,8 +12,15 @@ TAG_NAME="$2"
 
 VERSION=${TAG_NAME#"$BINARY_NAME"}
 
+echo "SDK version: "
+xcrun --show-sdk-version
+echo "SDK path: "
+xcrun --show-sdk-path
+echo "Platform version: "
+xcrun --show-sdk-platform-version
+
 # Parameters to use
-CROSSBUILD_MACOS_SDK="macosx12.0"
+CROSSBUILD_MACOS_SDK="macosx12.1"
 
 export CARGO_PROFILE_RELEASE_LTO=1
 
