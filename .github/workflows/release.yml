@@ -119,7 +119,7 @@ jobs:
             | tar xzf - -C ~/bin
       - name: Add release metadata
         run: |
-          ~/bin/mukti-bin add-release --version ${{ needs.create-release.outputs.version }}
+          ~/bin/mukti-bin add-release --version ${{ needs.create-release.outputs.version }} \
             --url-prefix "https://github.com/sunshowers/test-binary-release/releases/download/${{ github.ref_name }}" \
             --archive x86_64-unknown-linux-gnu=${{ needs.upload-assets.outputs.linux-tar }} \
             --archive x86_64-pc-windows-msvc=${{ needs.upload-assets.outputs.windows-zip }} \
