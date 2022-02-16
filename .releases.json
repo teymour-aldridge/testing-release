@@ -1,0 +1,1 @@
+{"latest":"0.0.16","ranges":{"0.0.16":{"latest":"0.0.16","is_prerelease":false,"versions":{"0.0.16":[{"target":"x86_64-unknown-linux-gnu","url":"/-x86_64-unknown-linux-gnu.tar.gz"},{"target":"x86_64-pc-windows-msvc","url":"/-x86_64-pc-windows-msvc.tar.gz"},{"target":"universal-apple-darwin","url":"/sunshowers-test-binary-release-0.0.16-universal-apple-darwin.tar.gz"}]}}}}
