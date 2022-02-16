@@ -68,9 +68,9 @@ jobs:
         shell: bash
         run: |
           if [[ ${{ matrix.target }} == windows ]]; then
-            echo "::set-output name=${{ matrix.target }}::${{ github.ref-name }}-${{ matrix.target }}".zip
+            echo "::set-output name=${{ matrix.target }}::${{ github.ref_name }}-${{ matrix.target }}".zip
           else
-            echo "::set-output name=${{ matrix.target }}::${{ github.ref-name }}-${{ matrix.target }}".tar.gz
+            echo "::set-output name=${{ matrix.target }}::${{ github.ref_name }}-${{ matrix.target }}".tar.gz
           fi
     outputs:
       linux-tar: ${{ steps.archive-output.outputs.x86_64-unknown-linux-gnu }}
@@ -119,7 +119,8 @@ jobs:
             | tar xzf - -C ~/bin
       - name: Add release metadata
         run: |
-          ~/bin/mukti-bin add-release --version ${{ needs.create-release.outputs.version }} --url-prefix "$URL_PREFIX" \
+          ~/bin/mukti-bin add-release --version ${{ needs.create-release.outputs.version }}
+            --url-prefix "https://github.com/sunshowers/test-binary-release/releases/download/${{ github.ref_name }}" \
             --archive x86_64-unknown-linux-gnu=${{ needs.upload-assets.outputs.linux-tar }} \
             --archive x86_64-pc-windows-msvc=${{ needs.upload-assets.outputs.windows-zip }} \
             --archive universal-apple-darwin=${{ needs.upload-assets-mac.outputs.mac-tar }}
