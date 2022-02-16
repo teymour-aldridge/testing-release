@@ -65,11 +65,13 @@ jobs:
           CARGO_PROFILE_RELEASE_LTO: true
       - name: Set archive output variable
         id: archive-output
+        shell: bash
         run: |
           if [[ ${{ matrix.target }} == windows ]]; then
             echo "::set-output name=${{ matrix.target }}::${{ github.ref-name }}-${{ matrix.target }}".zip
           else
             echo "::set-output name=${{ matrix.target }}::${{ github.ref-name }}-${{ matrix.target }}".tar.gz
+          fi
     outputs:
       linux-tar: ${{ steps.archive-output.outputs.x86_64-unknown-linux-gnu }}
       windows-zip: ${{ steps.archive-output.outputs.x86_64-pc-windows-msvc }}
