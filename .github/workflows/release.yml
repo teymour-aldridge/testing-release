@@ -106,11 +106,12 @@ jobs:
     name: Update release-meta branch
     if: github.repository_owner == 'sunshowers'
     needs:
+      - create-release
       - upload-assets
       - upload-assets-mac
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2 
       - name: Download mukti
         run: |
           mkdir -p ~/bin
@@ -144,3 +145,4 @@ jobs:
         with:
           branch: release-meta
           folder: out-dir
+ 
