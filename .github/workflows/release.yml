@@ -124,6 +124,11 @@ jobs:
           ~/bin/mukti-bin generate-netlify out-dir --alias linux=x86_64-unknown-linux-gnu \
             --alias windows=x86_64-pc-windows-msvc --alias mac=universal-apple-darwin
       - name: Update releases.json on main branch
+        run: |
+          git pull --autostash --rebase origin main
+          git add .releases.json
+          git commit -m "Update release metadata for ${{ github.ref_name }}" --author="github-actions <41898282+github-actions[bot]@users.noreply.github.com>"
+          git push origin HEAD:main
         uses: EndBug/add-and-commit@v8
         with:
           add: .releases.json
@@ -140,4 +145,3 @@ jobs:
         with:
           branch: release-meta
           folder: out-dir
- 
