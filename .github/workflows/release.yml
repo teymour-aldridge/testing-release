@@ -8,7 +8,7 @@ on:
 
 jobs:
   create-release:
-    if: github.repository_owner == 'sunshowers'
+    if: github.repository_owner == 'teymour-aldridge'
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -27,13 +27,15 @@ jobs:
 
   upload-assets:
     name: Publish for ${{ matrix.target }}
-    if: github.repository_owner == 'sunshowers'
+    if: github.repository_owner == 'teymour-aldridge'
     needs:
       - create-release
     strategy:
       matrix:
         include:
           - target: x86_64-unknown-linux-gnu
+            os: ubuntu-18.04
+          - target: aarch64-unknown-linux-gnu
             os: ubuntu-18.04
           - target: x86_64-pc-windows-msvc
             os: windows-latest
@@ -72,7 +74,7 @@ jobs:
 
   upload-assets-mac:
     name: Publish universal binary for Mac
-    if: github.repository_owner == 'sunshowers'
+    if: github.repository_owner == 'teymour-aldridge'
     needs:
       - create-release
     runs-on: macos-latest
@@ -98,7 +100,7 @@ jobs:
 
   update-release-meta:
     name: Update release-meta branch
-    if: github.repository_owner == 'sunshowers'
+    if: github.repository_owner == 'teymour-aldridge'
     needs:
       - create-release
       - upload-assets
