@@ -17,7 +17,7 @@ jobs:
       - uses: taiki-e/create-gh-release-action@v1
         id: create-gh-release
         with:
-          prefix: sunshowers-test-binary-release
+          prefix: teymour-aldridge-test-binary-release
           title: $prefix $version
           branch: main
         env:
@@ -50,7 +50,7 @@ jobs:
           override: true
       - uses: taiki-e/upload-rust-binary-action@v1
         with:
-          bin: sunshowers-test-binary-release
+          bin: teymour-aldridge-test-binary-release
           # The tag name contains the binary name so just use that.
           archive: $tag-$target
           target: ${{ matrix.target }}
@@ -89,7 +89,7 @@ jobs:
       - name: Build release for Mac
         id: build-release
         run: |
-          ./scripts/release-mac-build.sh sunshowers-test-binary-release "${{ github.ref_name }}"
+          ./scripts/release-mac-build.sh teymour-aldridge-test-binary-release "${{ github.ref_name }}"
       - uses: svenstaro/upload-release-action@2.2.1
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
