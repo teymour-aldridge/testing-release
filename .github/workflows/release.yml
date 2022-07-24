@@ -3,8 +3,6 @@
 name: Release binaries
 on:
   push:
-    tags:
-      - '*'
 
 jobs:
   create-release:
